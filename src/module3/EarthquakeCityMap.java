@@ -12,6 +12,7 @@ import processing.core.PApplet;
 //Unfolding libraries
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.marker.Marker;
+import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
@@ -67,12 +68,50 @@ public class EarthquakeCityMap extends PApplet {
 	    map.zoomToLevel(2);
 	    MapUtils.createDefaultEventDispatcher(this, map);	
 	    
-	    Location location = new Location(-38.14f, -73.03f);
-	    Marker marker = new SimplePointMarker(location);
-	    map.addMarker(marker);
+	    // create 3 PointFeature and setup its location and properties with random data
+	    PointFeature earthquake = new PointFeature(new Location(-38.14f, -73.03f));
+	    earthquake.addProperty("title", "Valdivia, Chile");
+	    earthquake.addProperty("magnitude", 9.5);
+	    earthquake.addProperty("date", "May 22, 1960");
+	    earthquake.addProperty("year", 1960);
+	    
+	    PointFeature alaskaEq = new PointFeature(new Location(38.14f, -73.03f));
+	    alaskaEq.addProperty("title", "Alaska");
+	    alaskaEq.addProperty("magnitude", 7.5);
+	    alaskaEq.addProperty("date", "April 2, 1994");
+	    alaskaEq.addProperty("year", 1996);
+	    
+	    PointFeature sumatraEq = new PointFeature(new Location(-38.14f, 73.03f));
+	    sumatraEq.addProperty("title", "Sumatra");
+	    sumatraEq.addProperty("magnitude", 4.5);
+	    sumatraEq.addProperty("date", "October 12, 2004");
+	    sumatraEq.addProperty("year", 2008);
+	    
+	    //create List of PointFeature and add 3 PointFeature that was created
+	    List<PointFeature> bigEqs = new ArrayList<PointFeature>();
+	    bigEqs.add(earthquake);
+	    bigEqs.add(alaskaEq);
+	    bigEqs.add(sumatraEq);
 			
-	    // The List you will populate with new SimplePointMarkers
+	    // Create a List of marker that will be populated with SimplePointMarker
 	    List<Marker> markers = new ArrayList<Marker>();
+	    for(PointFeature pf : bigEqs){
+	    	SimplePointMarker simplePointMarker = new SimplePointMarker(pf.getLocation(), pf.getProperties());
+	    	
+	    	// Check the "magnitude" property and change the color of the marker base on the magnitude
+	    	if((double)simplePointMarker.getProperty("magnitude") > 9){
+	    		simplePointMarker.setColor(color(255, 0, 0));
+	    	}else if ((double)simplePointMarker.getProperty("magnitude") > 7) {
+				simplePointMarker.setColor(color(255, 255, 0));
+			} else {
+				simplePointMarker.setColor(color(150, 150, 150));
+			}
+	    	
+	    	markers.add(simplePointMarker);
+	    }
+	    
+	    map.addMarkers(markers);
+	    
 
 	    //Use provided parser to collect properties for each earthquake
 	    //PointFeatures have a getLocation method
