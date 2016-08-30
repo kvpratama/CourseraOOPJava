@@ -60,62 +60,25 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom"; 	// Same feed, saved Aug 7, 2015, for working offline
 		}
 		else {
-			map = new UnfoldingMap(this, 125, 50, 700, 500, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 725, 500, new Google.GoogleMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 			//earthquakesURL = "2.5_week.atom";
 		}
 		
 	    map.zoomToLevel(2);
-	    MapUtils.createDefaultEventDispatcher(this, map);	
+	    MapUtils.createDefaultEventDispatcher(this, map);
 	    
-	    // create 3 PointFeature and setup its location and properties with random data
-	    PointFeature earthquake = new PointFeature(new Location(-38.14f, -73.03f));
-	    earthquake.addProperty("title", "Valdivia, Chile");
-	    earthquake.addProperty("magnitude", 9.5);
-	    earthquake.addProperty("date", "May 22, 1960");
-	    earthquake.addProperty("year", 1960);
-	    
-	    PointFeature alaskaEq = new PointFeature(new Location(38.14f, -73.03f));
-	    alaskaEq.addProperty("title", "Alaska");
-	    alaskaEq.addProperty("magnitude", 7.5);
-	    alaskaEq.addProperty("date", "April 2, 1994");
-	    alaskaEq.addProperty("year", 1996);
-	    
-	    PointFeature sumatraEq = new PointFeature(new Location(-38.14f, 73.03f));
-	    sumatraEq.addProperty("title", "Sumatra");
-	    sumatraEq.addProperty("magnitude", 4.5);
-	    sumatraEq.addProperty("date", "October 12, 2004");
-	    sumatraEq.addProperty("year", 2008);
-	    
-	    //create List of PointFeature and add 3 PointFeature that was created
-	    List<PointFeature> bigEqs = new ArrayList<PointFeature>();
-	    bigEqs.add(earthquake);
-	    bigEqs.add(alaskaEq);
-	    bigEqs.add(sumatraEq);
-			
-	    // Create a List of marker that will be populated with SimplePointMarker
-	    List<Marker> markers = new ArrayList<Marker>();
-	    for(PointFeature pf : bigEqs){
-	    	SimplePointMarker simplePointMarker = new SimplePointMarker(pf.getLocation(), pf.getProperties());
-	    	
-	    	// Check the "magnitude" property and change the color of the marker base on the magnitude
-	    	if((double)simplePointMarker.getProperty("magnitude") > 9){
-	    		simplePointMarker.setColor(color(255, 0, 0));
-	    	}else if ((double)simplePointMarker.getProperty("magnitude") > 7) {
-				simplePointMarker.setColor(color(255, 255, 0));
-			} else {
-				simplePointMarker.setColor(color(150, 150, 150));
-			}
-	    	
-	    	markers.add(simplePointMarker);
-	    }
-	    
-	    map.addMarkers(markers);
-	    
-
 	    //Use provided parser to collect properties for each earthquake
 	    //PointFeatures have a getLocation method
 	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
+			
+	    // Create a List of marker that will be populated with SimplePointMarker
+	    List<Marker> markers = new ArrayList<Marker>();
+	    for(PointFeature pf : earthquakes){	    	
+	    	markers.add(createMarker(pf));
+	    }
+	    
+	    map.addMarkers(markers);
 	    
 	    // These print statements show you (1) all of the relevant properties 
 	    // in the features, and (2) how to get one property and use it
@@ -140,11 +103,26 @@ public class EarthquakeCityMap extends PApplet {
 	private SimplePointMarker createMarker(PointFeature feature)
 	{
 		// finish implementing and use this method, if it helps.
-		return new SimplePointMarker(feature.getLocation());
+		
+		SimplePointMarker simplePointMarker = new SimplePointMarker(feature.getLocation());
+    	
+    	// Check the "magnitude" property and change the color and the size of the marker base on the magnitude
+    	if((float)feature.getProperty("magnitude") > 5){
+    		simplePointMarker.setColor(color(255, 0, 0));
+    		simplePointMarker.setRadius(15);
+    	}else if ((float)feature.getProperty("magnitude") > 4) {
+			simplePointMarker.setColor(color(255, 255, 0));
+			simplePointMarker.setRadius(10);
+		} else {
+			simplePointMarker.setColor(color(0, 0, 255));
+			simplePointMarker.setRadius(5);
+		}
+		
+		return simplePointMarker;
 	}
 	
 	public void draw() {
-	    background(129, 129, 129);
+	    background(10);
 	    map.draw();
 	    addKey();
 	}
@@ -155,6 +133,6 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
-	
+		rect(25, 50, 150, 300, 7);
 	}
 }
