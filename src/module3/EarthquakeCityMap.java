@@ -133,6 +133,32 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
+		
+		//create white rectangle as the place to put the key
+		fill(255, 255, 255);
 		rect(25, 50, 150, 300, 7);
+		
+		// Draw ellipse to represent earthquake
+		fill(255, 0, 0);
+		ellipse(50, 150, 15, 15);
+		fill(255, 255, 0);
+		ellipse(50, 200, 10, 10);
+		fill(0, 0, 255);
+		ellipse(50, 250, 5, 5);
+		
+		// Write the text
+		textSize(16);
+		fill(0, 0, 0);
+		text("Earthquake Key", 40, 100);
+		
+		textSize(12);
+		fill(255, 0, 0);
+		text("5.0+ Magnitude", 65, 155);
+		
+		fill(255, 255, 0);
+		text("4.0+ Magnitude", 65, 205);
+		
+		fill(0, 0, 255);
+		text("Below 4.0", 65, 255);
 	}
 }
