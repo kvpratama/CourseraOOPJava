@@ -32,11 +32,11 @@ public class OceanQuakeMarker extends EarthquakeMarker {
 		// TODO: Implement this method
 
 		if (getDepth() > THRESHOLD_DEEP) {
-			pg.rect(x, y, 16, 16);
+			pg.rect(x - 8, y - 8, 16, 16);
 		}else if(getDepth() > THRESHOLD_INTERMEDIATE){
-			pg.rect(x, y, 10, 10);
+			pg.rect(x - 5, y - 5, 10, 10);
 		}else{
-			pg.rect(x, y, 6, 6);
+			pg.rect(x - 3, y - 3, 6, 6);
 		}
 		
 	}
