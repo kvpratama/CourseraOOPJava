@@ -35,7 +35,7 @@ public class EarthquakeCityMap extends PApplet {
 	private static final long serialVersionUID = 1L;
 
 	// IF YOU ARE WORKING OFFILINE, change the value of this variable to true
-	private static final boolean offline = true;
+	private static final boolean offline = false;
 	
 	/** This is where to find the local tiles, for working without an Internet connection */
 	public static String mbTilesString = "blankLight-1-3.mbtiles";
@@ -133,25 +133,51 @@ public class EarthquakeCityMap extends PApplet {
 	// TODO: Update this method as appropriate
 	private void addKey() {	
 		// Remember you can use Processing's graphics methods here
+		// Draw white rectangle as background
 		fill(255, 250, 240);
-		rect(25, 50, 150, 250);
+		rect(25, 50, 150, 340);
 		
+		// Draw Title
 		fill(0);
 		textAlign(LEFT, CENTER);
-		textSize(12);
+		textSize(14);
 		text("Earthquake Key", 50, 75);
 		
-		fill(color(255, 0, 0));
-		ellipse(50, 125, 15, 15);
-		fill(color(255, 255, 0));
-		ellipse(50, 175, 10, 10);
-		fill(color(0, 0, 255));
-		ellipse(50, 225, 5, 5);
+		// Draw triangle to represent city
+		fill(0, 255, 0);
+		triangle(50,  125 - CityMarker.TRI_SIZE, 50 - CityMarker.TRI_SIZE, 
+				125 + CityMarker.TRI_SIZE, 50 + CityMarker.TRI_SIZE, 
+				125 + CityMarker.TRI_SIZE);
 		
+		// Draw Ellipse and Rectangle to represent Land and Ocean quake
+		fill(color(255, 255, 255));
+		ellipse(50, 150, 10, 10);
+		rect(50 - 5, 175 - 5, 10, 10);
+		
+		// Draw 4 ellipse to represent depth and if happen past day
+		fill(255, 255, 00);
+		ellipse(50, 235, 10, 10);
+		fill(0, 0, 255);
+		ellipse(50, 260, 10, 10);
+		fill(255, 0, 0);
+		ellipse(50, 285, 10, 10);
+		fill(255, 255, 255);
+		ellipse(50, 310, 10, 10);
+		line(50-7, 310-7, 50+7, 310+7);
+		line(50-7, 310+7, 50+7, 310-7);
+		
+		// Draw the text
 		fill(0, 0, 0);
-		text("5.0+ Magnitude", 75, 125);
-		text("4.0+ Magnitude", 75, 175);
-		text("Below 4.0", 75, 225);
+		textSize(12);
+		text("City Marker", 75, 125);
+		text("Land Quake", 75, 150);
+		text("Ocean Quake", 75, 175);
+		text("Size ~ Magnitude", 45, 200);
+		
+		text("Shallow", 75, 235);
+		text("Intermediate", 75, 260);
+		text("Deep", 75, 285);
+		text("Past Day", 75, 310);
 	}
 	
 	// Checks whether this quake occurred on land.  If it did, it sets the 
