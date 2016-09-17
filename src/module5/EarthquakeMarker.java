@@ -96,12 +96,12 @@ public abstract class EarthquakeMarker extends CommonMarker
 		// TODO: Implement this method
 		if(this.isSelected()){
 			pg.fill(255, 255, 255);
-			pg.rect(x, y, 200, 50);
+			pg.rect(x+5, y+5, 200, 50);
 			
 			pg.fill(0, 0, 0);
-			pg.text(this.getTitle(), x+15, y+15);
-			pg.text("Magnitude: " + this.getMagnitude(), x+15, y+30);
-			pg.text("Depth: " + this.getDepth(), x+15, y+45);
+			pg.text(this.getTitle(), x+20, y+20);
+			pg.text("Magnitude: " + this.getMagnitude(), x+20, y+35);
+			pg.text("Depth: " + this.getDepth(), x+20, y+50);
 		}
 		
 	}

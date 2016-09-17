@@ -56,12 +56,12 @@ public class CityMarker extends CommonMarker {
 		// TODO: Implement this method
 		if(this.isSelected()){
 			pg.fill(255, 255, 255);
-			pg.rect(x, y, 150, 50);
+			pg.rect(x+5, y+5, 150, 50);
 			
 			pg.fill(0, 0, 0);
-			pg.text("City: " + this.getCity(), x+5, y+15);
-			pg.text("Country: " + this.getCountry(), x+5, y+30);
-			pg.text("Population: " + this.getPopulation(), x+5, y+45);
+			pg.text("City: " + this.getCity(), x+10, y+20);
+			pg.text("Country: " + this.getCountry(), x+10, y+35);
+			pg.text("Population: " + this.getPopulation(), x+10, y+50);
 		}
 	}
 	
