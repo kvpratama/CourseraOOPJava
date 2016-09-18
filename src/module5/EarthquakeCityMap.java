@@ -163,6 +163,23 @@ public class EarthquakeCityMap extends PApplet {
 	 * Or if a city is clicked, it will display all the earthquakes 
 	 * where the city is in the threat circle
 	 */
+
+	/* Explanation on how the code handles and responds to mouse clicks :
+	 *
+	 * When a mouse click event occur, this method will first check whether its click on a marker or not.
+	 * If user doesn't click on a marker, the program will display all marker.
+	 *
+	 * If user click on a city marker, hideEarthQuakeMarkerOutsideCityRange() will run.
+	 * This method will loop through earthquakeMarker and test if the earthquake 
+	 * has the clicked city inside its threat circle.
+	 * If the the earthquake threat circle doesn't contain the clicked city, hide the earthquake.
+	 * Lastly, hide other city marker that is not clicked.
+	 *
+	 * If user click on an earthquake marker, hideCityMarkerOutsideThreatCircle() will run.
+	 * This method will loop through city marker and test if the city is within clicked earthquake threat circle.
+	 * If city is outside the threat cirlce, hide the city.
+	 * Lastly hide other earthquake that is not clicked.
+	*/
 	@Override
 	public void mouseClicked()
 	{
