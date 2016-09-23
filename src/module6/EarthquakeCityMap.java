@@ -1,7 +1,6 @@
 package module6;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -124,7 +123,7 @@ public class EarthquakeCityMap extends PApplet {
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
 	    
-	    
+	    sortAndPrint();
 	}  // End setup
 	
 	
@@ -139,6 +138,36 @@ public class EarthquakeCityMap extends PApplet {
 	// TODO: Add the method:
 	//   private void sortAndPrint(int numToPrint)
 	// and then call that method from setUp
+	private void sortAndPrint(){
+		EarthquakeMarker[] eqArr = quakeMarkers.toArray(new EarthquakeMarker[0]);
+		insertionSort(eqArr);
+		printArray(eqArr);
+	}
+	
+	// Sort EarthquakeMarker using insertion sort algorithm
+	private void insertionSort(EarthquakeMarker[] arr){
+		int currInd;
+		for (int i = 1; i < arr.length; i++) {
+			currInd = i;
+			while (currInd > 0 && arr[currInd].compareTo(arr[currInd-1]) > 0) {
+				swap(arr, currInd, currInd-1);
+				currInd--;
+			}
+		}
+	}
+	
+	// Swap position of firstIndex with secondIndex in array
+	private void swap(EarthquakeMarker[] a, int firstIndex, int secondIndex){
+		EarthquakeMarker temp = a[firstIndex];
+		a[firstIndex] = a[secondIndex];
+		a[secondIndex] = temp;
+	}
+		
+	private void printArray(EarthquakeMarker[] a){
+		for (EarthquakeMarker e : a) {
+			System.out.println(e.getMagnitude() + " " + e.getTitle());
+		}
+	}
 	
 	/** Event handler that gets called automatically when the 
 	 * mouse moves.
